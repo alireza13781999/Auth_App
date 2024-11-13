@@ -120,3 +120,6 @@ You can access the application at `http://127.0.0.1:8000/`.
         "message": "Login successful"
     }
     ```
+
+## Testing with Postman
+[<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/7293653-66a4dfc7-5871-4492-b829-8fd64c9af1ec?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D7293653-66a4dfc7-5871-4492-b829-8fd64c9af1ec%26entityType%3Dcollection%26workspaceId%3Dc4d57c25-8af2-473a-a76f-4968935f743c)
