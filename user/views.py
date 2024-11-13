@@ -20,15 +20,18 @@ def request_verification(request):
             ip_address=ip_address
         )
         
+        # Check blocking
         if check_ip_block(ip_address, VerificationCode):
             return JsonResponse({'error': 'You are blocked for an hour.'}, status=403)
         else:
             code_entry.code = generate_verification_code()
+            # Reset attempts
             if code_entry.attempts >= 3:
                 code_entry.attempts = 0
             code_entry.save()
         if not created: 
             try:
+                # Check phone validator and increase attempts and update last attempt time
                 code_entry.full_clean()
                 code_entry.attempts += 1
                 code_entry.last_attempt = timezone.now()
@@ -51,6 +54,8 @@ def verify_code(request):
     try:
         code_entry = VerificationCode.objects.get(phone_number=phone_number, ip_address=ip_address)
         code_entries = VerificationCode.objects.filter(phone_number=phone_number)
+        
+        # Check one phone number with multiple IPs
         if len(code_entries) > 1:
             code_entry.attempts += 1
             code_entry.last_attempt = timezone.now()
@@ -64,10 +69,12 @@ def verify_code(request):
                 code_entry.save()
                 
         if code_entry.code == code:
+            # Create session for register and remove verification object
             request.session['phone_number'] = phone_number
             code_entry.delete()
             return JsonResponse({'message': 'Phone number verified successfully'})
         else:
+            # Check phone validator and increase attempts and update last attempt time
             code_entry.attempts += 1
             code_entry.last_attempt = timezone.now()
             code_entry.save()
@@ -104,6 +111,7 @@ def complete_registration(request):
     )
     
     try:
+        # Check phone validation and create user
         user = User(
             phone_number=phone_number,
             first_name=first_name,
@@ -129,6 +137,7 @@ def login(request):
     try:
         user = User.objects.get(phone_number=phone_number)
 
+        # Check blocking for password entry
         if check_ip_block(ip_address, User):
             return JsonResponse({'error': 'You are blocked for an hour.'}, status=403)
         else:
@@ -138,6 +147,7 @@ def login(request):
         if user.check_password(password):
             return JsonResponse({'message': 'Login successful'})
         else:
+            # Increase attempts for wrong password
             user.attempts += 1
             user.last_attempt = timezone.now()
             user.save()
