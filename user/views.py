@@ -7,7 +7,7 @@ from utils.function_utils import check_ip_block, generate_verification_code
 
 
 @csrf_exempt
-def request_verification(request):
+def send_code(request):
     ip_address = request.META.get('REMOTE_ADDR')
     phone_number = request.POST.get('phone_number')
     
@@ -85,7 +85,7 @@ def verify_code(request):
 
 
 @csrf_exempt
-def complete_registration(request):
+def register(request):
     phone_number = request.session.get('phone_number')
     ip_address = request.META.get('REMOTE_ADDR')
     if not phone_number:
