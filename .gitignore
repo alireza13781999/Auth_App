@@ -1,0 +1,63 @@
+# Python bytecode files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django specific files
+db.sqlite3
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.sqlite3-journal
+
+# Django migrations
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# Media/uploads - keep this if you're storing uploaded files locally
+media/
+
+# Environment variables and secrets
+.env
+.env.*
+
+# VS Code specific
+.vscode/
+
+# Jupyter Notebook checkpoints (if you're using Jupyter notebooks)
+.ipynb_checkpoints/
+
+# macOS specific
+.DS_Store
+
+# Node modules (if you're using frontend frameworks or libraries in Django)
+node_modules/
+
+# Python virtual environment
+venv/
+env/
+.idea/
+
+
+# Coverage reports
+htmlcov/
+.coverage
+.tox/
+.cache
+pytest_cache/
+coverage.xml
+nosetests.xml
+test-results.xml
+
+# MyPy
+.mypy_cache/
+
+# PyInstaller
+dist/
+build/
+
+
+
